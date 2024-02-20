@@ -21,9 +21,11 @@ import java.util.List;
 public class User  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @Column(unique = true)
     private String email;
+
     private String profileImage;
     private String name;
     private boolean active;

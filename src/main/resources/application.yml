@@ -14,12 +14,23 @@ spring:
         show_sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: carellihoula10@gmail.com
+    password: xbyxfhvxklhujrdf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 application:
   security:
     jwt:
       SECRET_KEY: fdbb01bba114cb31a25c8cb9ad915723a8f19d85da8ef4526738c0be0381ae31
-      expiration: 60000
+      expiration: 3600000
       refreshToken:
         expiration: 604800000  #seven days
 
