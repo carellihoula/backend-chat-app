@@ -3,6 +3,10 @@ package com.carel.backendapp.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +59,29 @@ public class UserController {
         userService.deleteMulti(users);
     }
 
+    ///////////////////////////////CHAT/////////////////////////////////
+    @MessageMapping("/user.addUser")
+    @SendToUser("/user/topic")
+    public User addUser(
+          @Payload User user
+    ){
+        return userService.saveUser(user);
+    }
+    // disconnect user
+    @MessageMapping("/user.disconnect")
+    @SendToUser("/user/topic")
+    public User disconnect(
+            @Payload User user
+    ){
+        userService.disconnect(user);
+        return user;
+    }
+    //find users connected
+    @GetMapping("users")
+    public ResponseEntity<List<User>> findConnectedUSer(
 
+    ){
+        return ResponseEntity.ok(userService.getConnectedUser());
+    }
 
 }

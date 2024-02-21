@@ -40,4 +40,28 @@ public class UserService {
         storedUser.setProfileImage(user.getProfileImage());
         userRepository.save(storedUser);
     }
+
+    //////////////////////////CHAT/////////////////////////////////////////
+    //save user
+    public User saveUser(User user){
+        user.setStatus(Status.ONLINE);
+        userRepository.save(user);
+        return user;
+    }
+
+    //disconnect user
+    public void disconnect(User user){
+        User storedUser = userRepository.findByEmail(user.getEmail()).orElse(null);
+        if(storedUser != null){
+            storedUser.setStatus(Status.OFFLINE);
+            userRepository.save(storedUser);
+        }
+
+    }
+
+    //findUser connected
+    public List<User> getConnectedUser(){
+         return userRepository.findAllByStatus(Status.ONLINE);
+    }
+
 }
