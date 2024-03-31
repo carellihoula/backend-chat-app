@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,9 @@ public class ChatMsgService {
                         chatMessage.getRecipientId(),
                         true
                 )
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new NoSuchElementException("Aucune salle de chat trouvée pour les IDs donnés")
+                );
 
         chatMessage.setChatId(chatId);
         chatMessageRepository.save(chatMessage);
@@ -39,5 +42,9 @@ public class ChatMsgService {
         );
 
         return chatId.map(chatMessageRepository::findByChatId).orElse(new ArrayList<>());
+    }
+
+    public List<ChatMessage> findChatsByCurrentUser(Integer id){
+        return chatMessageRepository.findChatsByCurrentUser(id);
     }
 }

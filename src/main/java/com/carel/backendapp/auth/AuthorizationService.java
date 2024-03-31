@@ -64,6 +64,7 @@ public class AuthorizationService {
         validationService.validation(user);
     }
 
+    //authenticate user with login(email) and password
     public AuthorizationResponse authentication(AuthorizationRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -85,6 +86,7 @@ public class AuthorizationService {
                 .build();
     }
 
+    //generate token jwt when user is authenticated
     public void userTokenSaved(User user, String token){
         Token tokenUser = Token.builder()
                 .expired(false)
@@ -94,6 +96,7 @@ public class AuthorizationService {
                 .build();
         tokenRepository.save(tokenUser);
     }
+    //remove all user token when user is authenticated and keep the last one.
     public void removeUselessToken(User user){
         List<Token> allValidTokenUser = tokenRepository.findAllValidTokenUser(user.getEmail());
         if(allValidTokenUser.isEmpty()){
@@ -106,7 +109,7 @@ public class AuthorizationService {
         tokenRepository.saveAll(allValidTokenUser);
         tokenRepository.deleteAllByExpiredAndRevoked(true, true);
     }
-
+   // verify if email respect email pattern
     public static boolean isEmailValid(String email) {
         if(email == null){
             return false;
@@ -116,6 +119,7 @@ public class AuthorizationService {
                 .matches();
     }
 
+    //refresh token to improve user experience
     public void refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;

@@ -16,32 +16,37 @@ public class ChatRoomService {
         Integer recipientId,
         boolean createNewRoomIfNotExist
     ){
-        return chatRoomRepository.findBySenderIdAndRecipientId(senderId, recipientId)
-                .map(ChatRoom::getChatId)
-                .or(() -> {
+        Optional<String> chatId = chatRoomRepository.findBySenderIdAndRecipientId(senderId, recipientId)
+                .map(ChatRoom::getChatId);
+        if(chatId.isEmpty() && createNewRoomIfNotExist ){
+            Optional.of(createChatId(senderId, recipientId));
+        }
+                /*.or(() -> {
                         if(createNewRoomIfNotExist){
                             var chatId = createChatId(senderId, recipientId);
                         }
                         return Optional.empty();
-                });
-
+                });*/
+        return chatId;
     }
 
     private String createChatId(Integer senderId, Integer recipientId) {
         String chatId = String.format("%s_%s", senderId, recipientId);
 
-        ChatRoom.builder()
+        ChatRoom senderToRecipient = ChatRoom.builder()
                 .senderId(senderId)
                 .recipientId(recipientId)
                 .chatId(chatId)
                 .build();
 
-        ChatRoom.builder()
+        ChatRoom recipientToSender = ChatRoom.builder()
                 .senderId(recipientId)
                 .recipientId(senderId)
                 .chatId(chatId)
                 .build();
-
+        //save to database
+        chatRoomRepository.save(senderToRecipient);
+        chatRoomRepository.save(recipientToSender);
         return chatId;
     }
 }

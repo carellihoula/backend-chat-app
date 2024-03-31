@@ -22,7 +22,7 @@ public class NotificationService {
         mail.setTo(validation.getUser().getEmail());
         mail.setSubject("Envoie de mail ");
 
-        String name = validation.getUser().getName();
+        String name = validation.getUser().getUsername();
         String code = validation.getCode();
         String content = String.format("Bonjour %s, " +
                 "voici le code pour valider votre compte: %s" ,name, code);

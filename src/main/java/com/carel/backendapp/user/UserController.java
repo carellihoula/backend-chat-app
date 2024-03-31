@@ -1,5 +1,6 @@
 package com.carel.backendapp.user;
 
+import com.carel.backendapp.aws.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,7 +9,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,11 +20,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final StorageService storageService;
 
     //GET SPECIFIC USER
     @GetMapping(path="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public User getUserInfo(
+    public UserResponse getUserInfo(
             @PathVariable("id") Integer id
     ){
         return userService.getUserInfo(id);
@@ -30,7 +34,7 @@ public class UserController {
     //GET ALL USERS
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<User> getAllUsers(){
+    public List<UserResponse> getAllUsers(){
         return userService.getAllUsers();
     }
 
@@ -59,6 +63,17 @@ public class UserController {
         userService.deleteMulti(users);
     }
 
+    @PostMapping("/upload/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> uploadFileToAws(
+            @PathVariable("id") Integer id,
+            @RequestParam("file") MultipartFile file
+            ) throws IOException {
+
+            String fileUrl = storageService.uploadFileToAws(id, file);
+            return ResponseEntity.ok(fileUrl);
+    }
+
     ///////////////////////////////CHAT/////////////////////////////////
     @MessageMapping("/user.addUser")
     @SendToUser("/user/topic")
@@ -77,7 +92,7 @@ public class UserController {
         return user;
     }
     //find users connected
-    @GetMapping("users")
+    @GetMapping("/connected")
     public ResponseEntity<List<User>> findConnectedUSer(
 
     ){

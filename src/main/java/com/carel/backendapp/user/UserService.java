@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -11,14 +12,27 @@ public class UserService {
 
     private final UserRepository userRepository;
     //get specific user
-    public User getUserInfo(Integer id) {
-        return userRepository.findById(id).orElseThrow(
+    public UserResponse getUserInfo(Integer id) {
+        User user = userRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("User doesn't exist")
         );
+        return saveUserResponse(user);
+
+    }
+    public UserResponse saveUserResponse(User user){
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole().name())
+                .profileImage(user.getProfileImage())
+                .active(user.isActive())
+                .build();
     }
     // get all users
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream().map(this::saveUserResponse).toList();
     }
 
     //delete specific user

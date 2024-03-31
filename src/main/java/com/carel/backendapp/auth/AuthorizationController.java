@@ -22,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class AuthorizationController {
 
     private AuthorizationService authorizationService;

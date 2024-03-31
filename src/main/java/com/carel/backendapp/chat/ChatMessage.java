@@ -21,12 +21,9 @@ public class ChatMessage {
     private  Integer id;
 
     private String chatId;
-
-
     private Integer senderId;
-
     private Integer recipientId;
-
     private String content;
+    private boolean read = false;
     private Date timestamp;
 }

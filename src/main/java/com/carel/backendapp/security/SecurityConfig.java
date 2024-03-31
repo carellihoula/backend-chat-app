@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    private static final String[] white_list = {"/api/auth/register", "/api/auth/login", "/api/auth/activate"};
+    private static final String[] white_list = {"/api/auth/register", "/api/auth/login", "/api/auth/activate", "/ws/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
@@ -38,7 +39,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(white_list).permitAll()
                         .anyRequest().authenticated()
-
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -49,14 +49,18 @@ public class SecurityConfig {
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
+                //.oauth2Login().loginPage("/s")
                 .build();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "PUT"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "PUT", "OPTIONS"));
+        configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
