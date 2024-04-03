@@ -13,4 +13,4 @@ public interface ChatMsgRepository extends JpaRepository<ChatMessage, Integer> {
 
     @Query("FROM ChatMessage chat WHERE (chat.senderId = :id OR chat.recipientId = :id)")
     List<ChatMessage> findChatsByCurrentUser(@Param("id") Integer id);
-}
+}   
