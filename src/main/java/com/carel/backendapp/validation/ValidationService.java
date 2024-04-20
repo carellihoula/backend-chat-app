@@ -40,7 +40,7 @@ public class ValidationService {
 
     public Validation readByCode(String code){
         return validationRepository.findByCode(code).orElseThrow(
-                () -> new RuntimeException("Code invalide")
+                () -> new RuntimeException("Code b invalide")
         );
     }
 }
