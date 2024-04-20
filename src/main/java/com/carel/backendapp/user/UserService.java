@@ -14,7 +14,7 @@ public class UserService {
     //get specific user
     public UserResponse getUserInfo(Integer id) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User doesn't exist")
+                () -> new RuntimeException("User doesn't  b exist")
         );
         return saveUserResponse(user);
 
