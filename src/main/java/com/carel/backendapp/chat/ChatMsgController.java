@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -78,5 +79,17 @@ public class ChatMsgController {
         return ResponseEntity.ok(
                 chatMessageService.findChatsByCurrentUser(currentUserId)
         );
+    }
+    @DeleteMapping("api/messages/{chatId}")
+    public ResponseEntity<String> deleteMessagesByChatId(
+            @PathVariable String chatId
+    ){
+        try {
+            chatMessageService.deleteMessagesByChatId(chatId);
+            return ResponseEntity.ok("Messages deleted successfully.");
+        } catch (Exception e) {
+            // Capture et gestion  des exceptions spécifiques si nécessaire
+            return ResponseEntity.internalServerError().body("An error occurred while deleting messages.");
+        }
     }
 }

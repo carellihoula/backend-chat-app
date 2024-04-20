@@ -23,7 +23,7 @@ public class User  implements UserDetails {
 
     @Column(unique = true)
     private String email;
-
+    private String bio = "";
     private String profileImage;
     private String name;
     private Status status;

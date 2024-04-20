@@ -12,7 +12,7 @@ public class UserResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    private String bio;
     private String email;
     private String profileImage;
     private String name;

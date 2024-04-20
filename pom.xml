@@ -99,6 +99,12 @@
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version> <!-- Version actuelle du pilote MySQL -->
+		</dependency>
+
+		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>9.21.0</version> <!-- Utilisez la dernière version disponible -->
@@ -119,6 +125,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>chat-app-with-spring</finalName>
 	</build>
-
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>
+					prod
+				</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 </project>

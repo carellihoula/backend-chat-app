@@ -47,4 +47,8 @@ public class ChatMsgService {
     public List<ChatMessage> findChatsByCurrentUser(Integer id){
         return chatMessageRepository.findChatsByCurrentUser(id);
     }
+    public void deleteMessagesByChatId(String chatId) {
+        chatMessageRepository.deleteByChatId(chatId);
+    }
+
 }

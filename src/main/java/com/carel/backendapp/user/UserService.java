@@ -27,6 +27,7 @@ public class UserService {
                 .role(user.getRole().name())
                 .profileImage(user.getProfileImage())
                 .active(user.isActive())
+                .bio(user.getBio())
                 .build();
     }
     // get all users
