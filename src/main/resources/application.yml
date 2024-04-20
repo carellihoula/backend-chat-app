@@ -1,20 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d4691md0cnreom
-    username: u43lp5hefprggt
-    password: p0abe646e0ee125fd5e1720fc89d5a2108731ef6ae968c0c4078b58e51871e1a1
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: false
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
     host: smtp.gmail.com
     port: 587
@@ -37,6 +21,8 @@ spring:
           google:
             clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
             clientSecret: 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
+  profiles:
+    active: dev
 
 
 cloud:
