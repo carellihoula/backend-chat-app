@@ -29,7 +29,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    private static final String[] white_list = {"/api/auth/register", "/api/auth/login", "/api/auth/activate", "/ws/**"};
+    private static final String[] white_list = {"/api/users", "/api/auth/register", "/api/auth/login", "/api/auth/activate", "/ws/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
