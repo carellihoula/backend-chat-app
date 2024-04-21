@@ -2,6 +2,7 @@ package com.carel.backendapp.validation;
 
 import com.carel.backendapp.user.User;
 import com.carel.backendapp.user.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ValidationService {
     private NotificationService notif;
     private ValidationRepository validationRepository;
 
-    public void validation(User user){
+    public void validation(User user) throws MessagingException {
 
         Instant creation = Instant.now();
         Instant expiration = creation.plus(10, ChronoUnit.MINUTES);

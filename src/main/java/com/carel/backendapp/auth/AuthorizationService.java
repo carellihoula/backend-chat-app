@@ -8,6 +8,7 @@ import com.carel.backendapp.user.User;
 import com.carel.backendapp.user.UserRepository;
 import com.carel.backendapp.validation.ValidationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -44,7 +45,7 @@ public class AuthorizationService {
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
     );
 
-    public void register(User user) {
+    public void register(User user) throws MessagingException {
         //exception if user exists
         Optional<User> userfound = userRepository.findByEmail(user.getEmail());
         if(userfound.isPresent()){

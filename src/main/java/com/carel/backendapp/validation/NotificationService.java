@@ -1,11 +1,14 @@
 package com.carel.backendapp.validation;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -17,12 +20,13 @@ public class NotificationService {
     private final JavaMailSender javaMailSender;
     @Value("${spring.profiles.active}")
     private String profile;
-    public void sendMail(Validation validation){
-        SimpleMailMessage mail = new SimpleMailMessage();
-
-        mail.setFrom("carel@no-reply.com");
-        mail.setTo(validation.getUser().getEmail());
-        mail.setSubject("Envoie de mail ");
+    public void sendMail(Validation validation) throws MessagingException {
+        //SimpleMailMessage mail = new SimpleMailMessage();
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        helper.setFrom("carel@no-reply.com");
+        helper.setTo(validation.getUser().getEmail());
+        helper.setSubject("Envoie de mail ");
         String activationUrl = "https://canoappchat.vercel.app/activate";
         String name = validation.getUser().getUsername();
         String code = validation.getCode();
@@ -35,8 +39,8 @@ public class NotificationService {
                 "<a href=\"%s\">Activer Mon Compte</a></p>" +
                 "</body>" +
                 "</html>", name, code, activationUrl);
-        mail.setText(content);
+        helper.setText(content, true);
 
-        javaMailSender.send(mail);
+        javaMailSender.send(mimeMessage);
     }
 }

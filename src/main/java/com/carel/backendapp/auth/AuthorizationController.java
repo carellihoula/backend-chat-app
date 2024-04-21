@@ -5,6 +5,7 @@ import com.carel.backendapp.user.UserRepository;
 import com.carel.backendapp.validation.Validation;
 import com.carel.backendapp.validation.ValidationRepository;
 import com.carel.backendapp.validation.ValidationService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class AuthorizationController {
     private LogoutService logoutService;
 
     @PostMapping(path="/register",consumes= MediaType.APPLICATION_JSON_VALUE)
-    public void register(@RequestBody User user){
+    public void register(@RequestBody User user) throws MessagingException {
          authorizationService.register(user);
     }
 
