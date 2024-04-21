@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d4691md0cnreom
+    url: jdbc:postgresql://cb4l59cdg4fg1k.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d2p7tt2qf3g1q6
     username: u43lp5hefprggt
-    password: p0abe646e0ee125fd5e1720fc89d5a2108731ef6ae968c0c4078b58e51871e1a1
+    password: p9f4639227abc3c8dabf7be0ea8691cc74a48ff43077b6b3d44398661fd1443ee
     driver-class-name: org.postgresql.Driver
 
   jpa:
