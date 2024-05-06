@@ -1,5 +1,5 @@
 HELP.md
-application.yml
+
 application-dev.yml
 application-test.yml
 target/

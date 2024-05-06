@@ -1,0 +1,49 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: carellihoula10@gmail.com
+    password: xbyxfhvxklhujrdf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: fdbb01bba114cb31a25c8cb9ad915723a8f19d85da8ef4526738c0be0381ae31
+            clientSecret: aaafdbb01bba114cb31a25c8cb9ad915723a8f19d85da8ef4526738c0be0381ae31
+          google:
+            clientId: 700086744673-keplb3hc6ere9uiqddg4aleho4i08g37.apps.googleusercontent.com
+            clientSecret: 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
+  profiles:
+    active: prod
+
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA56GTA3MJGBAOIRDE
+      secret-key: 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
+
+aws:
+  s3:
+    bucket-name: canoapp
+
+
+application:
+  security:
+    jwt:
+      SECRET_KEY: fdbb01bba114cb31a25c8cb9ad915723a8f19d85da8ef4526738c0be0381ae31
+      expiration: 3600000 #10minutes
+      refreshToken:
+        expiration: 604800000  #7 days
+
+SPRING_DATASOURCE_URL: jdbc:postgresql://cb4l59cdg4fg1k.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d2p7tt2qf3g1q6
+SPRING_DATASOURCE_USERNAME: u43lp5hefprggt
+SPRING_DATASOURCE_PASSWORD: p9f4639227abc3c8dabf7be0ea8691cc74a48ff43077b6b3d44398661fd1443ee
