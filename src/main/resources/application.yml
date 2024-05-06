@@ -44,3 +44,6 @@ application:
       refreshToken:
         expiration: 604800000  #7 days
 
+SPRING_DATASOURCE_URL: jdbc:postgresql://cb4l59cdg4fg1k.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d2p7tt2qf3g1q6
+SPRING_DATASOURCE_USERNAME: u43lp5hefprggt
+SPRING_DATASOURCE_PASSWORD: p9f4639227abc3c8dabf7be0ea8691cc74a48ff43077b6b3d44398661fd1443ee
